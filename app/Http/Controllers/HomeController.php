@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
+use App\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
 {
@@ -21,8 +24,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index($lang)
     {
-        return view('home');
+        App::setlocale($lang);
+        $countCompanies = count(Company::all());
+        $countEmployees = count(Employee::all());
+        return view('home',[
+            'countCompanies' => $countCompanies,
+            'countEmployees' => $countEmployees,
+        ]);
     }
 }

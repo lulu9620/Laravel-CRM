@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Company;
+use App\Events\NewCompanyHasRegistered;
 use Illuminate\Http\Request;
-use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 
 class CompaniesController extends Controller
@@ -13,6 +13,7 @@ class CompaniesController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +21,7 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        $companies = Company::paginate(10);
+        $companies = Company::all();
         return view('companies.index', [
             'companies' => $companies,
         ]);
@@ -55,9 +56,9 @@ class CompaniesController extends Controller
         $company->email = request('email');
         $company->website = request('website');
         $company->logo = $fileNameToStore;
+        event(new NewCompanyHasRegistered($company));
 
         $company->save();
-
         return redirect('/companies');
     }
 
@@ -70,19 +71,24 @@ class CompaniesController extends Controller
     public function show($id)
     {
         $company = Company::find($id);
-        return view('companies.show',compact('company'));
+        return view('companies.show', [
+            'company' => $company,
+        ]);
     }
+
     /**
      * Show the form for editing the specified resource.
      *
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Company $company)
+    public function edit($id)
     {
-        return view('companies.edit', compact('company'));
+        $company = Company::find($id);
+        return view('companies.edit', [
+            'company' => $company,
+        ]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -118,6 +124,7 @@ class CompaniesController extends Controller
         Company::find($id)->delete();
         return back();
     }
+
     private function uploadImage(Request $request)
     {
         if ($request->hasFile('logo')) {

@@ -8,17 +8,21 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'App CRM') }}</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo=" crossorigin="anonymous"></script>
+    <script href="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 <body>
 <div id="app">
@@ -39,7 +43,7 @@
                     @guest
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
+                                <a class="nav-link" href="{{url('/')}}">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Contact</a>
@@ -47,7 +51,7 @@
                         @endif
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="/">Home</a>
+                            <a class="nav-link" href="{{url('home',app()->getLocale())}}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/companies">Companies</a>
@@ -63,13 +67,12 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ route('login')}}">Login</a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                {{--                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>--}}
+                                {{--  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>--}}
                             </li>
-
                         @endif
                     @else
                         <li class="nav-item dropdown">
@@ -79,7 +82,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                <a class="dropdown-item" href="{{ route('logout',app()->getLocale()) }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -90,6 +93,7 @@
                                 </form>
                             </div>
                         </li>
+
                     @endguest
                 </ul>
             </div>

@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <span class="h2">Add Company</span>
+        <div class="row ">
+            <div class="col-lg-12 text-center mt-3">
+                <span class="h2 ">Add Company</span>
             </div>
         </div>
         <div class="row">

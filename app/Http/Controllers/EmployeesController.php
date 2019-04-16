@@ -12,6 +12,7 @@ class EmployeesController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +20,7 @@ class EmployeesController extends Controller
      */
     public function index()
     {
-        $employees = Employee::paginate(10);
+        $employees = Employee::all();
         return view('employees.index', [
             'employees' => $employees,
         ]);
@@ -49,26 +50,14 @@ class EmployeesController extends Controller
         ]);
         $employee = new Employee();
         $employee->first_name = request('first_name');
-        $employee->last_name = request('first_name');
+        $employee->last_name = request('last_name');
         $employee->email = request('email');
         $employee->phone = request('phone');
         if (request('company_id') !== "default") {
             $employee->company_id = request('company_id');
             $employee->save();
-            return redirect('/employees');
         }
-        return back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return redirect('/employees');
     }
 
     /**
@@ -81,7 +70,8 @@ class EmployeesController extends Controller
     {
         $employee = Employee::find($id);
         $companies = Company::all();
-        return view('employees.edit', [
+
+        return view('/employees.edit', [
             'employee' => $employee,
             'companies' => $companies,
         ]);
@@ -120,6 +110,6 @@ class EmployeesController extends Controller
     public function destroy($id)
     {
         Employee::find($id)->delete();
-        return back();
+        return redirect('/employees');
     }
 }

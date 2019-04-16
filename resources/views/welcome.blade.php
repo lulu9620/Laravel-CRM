@@ -2,7 +2,7 @@
 @section('content')
     <div class="jumbotron">
         <div class="h2 text-center">
-                Welcome to CRM Application!
+            Welcome to CRM Application!
         </div>
     </div>
 @endsection
