@@ -2,9 +2,9 @@
 
 Route::resource('/', 'WelcomeController');
 
-Route::resource('/companies', 'CompaniesController');
+Route::resource('/companies', 'CompaniesController')->middleware('auth');
 
-Route::resource('/employees', 'EmployeesController');
+Route::resource('/employees', 'EmployeesController')->middleware('auth');
 
 Auth::routes();
 

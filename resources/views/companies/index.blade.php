@@ -17,7 +17,7 @@
                 </a>
             </div>
         </div>
-        <table id="table_companies" class="display" style="width: 100%">
+        <table id="table_companies" class="display w-100">
             <thead>
             <tr>
                 <th>Logo</th>
@@ -30,11 +30,11 @@
             <tbody>
             @foreach($companies as $company)
                 <tr>
-                    <td><img src="/storage/companyLogo/{{$company->logo}}" class="img-fluid"></td>
+                    <td><img src="/storage/companies/{{$company->logo}}" class="img-fluid" alt="image"></td>
                     <td><a href="/companies/{{$company->id}}/edit" class="nav-link">{{$company->name}}</a></td>
                     <td>{{$company->email}}</td>
                     <td>{{$company->website}}</td>
-                    <td><a href="/companies/{{$company->id}}/"><i class="fas fa-users ml-5" style="font-size:25px"></i></a></td>
+                    <td><a href="{{$company->id}}/"><i class="fas fa-users ml-5 h5"></i></a></td>
                 </tr>
             @endforeach
             </tbody>

@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
-use App\Company;
+use App\Models\Company;
 
 class EmployeesTableSeeder extends Seeder
 {
@@ -14,9 +14,9 @@ class EmployeesTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create('App\Employee');
+        $faker = Faker::create('App\Models\Employee');
         $companies = Company::all()->pluck('id')->toArray();
-        for ($i = 0; $i < 150; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             DB::table('employees')->insert([
                 'first_name' => $faker->firstName,
                 'last_name' => $faker->lastName,

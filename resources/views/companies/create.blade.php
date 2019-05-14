@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label for="logo">Add logo:</label>
-                        <input type="file" name="logo" class="form-control-file">
+                        <input type="file" name="logo" class="form-control-file" multiple>
                     </div>
                     @if($errors->any())
                     <div class="alert alert-danger" role="alert">

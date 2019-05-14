@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
+use App\Models\Company;
 use App\Events\NewCompanyHasRegistered;
 use Illuminate\Http\Request;
 
 
 class CompaniesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     /**
      * Display a listing of the resource.
@@ -49,13 +49,14 @@ class CompaniesController extends Controller
             'name' => 'required',
         ]);
         /* Upload image*/
-        $fileNameToStore = $this->uploadImage($request);
+//        $fileNameToStore = $this->uploadImage($request);
 
         $company = new Company();
-        $company->name = request('name');
-        $company->email = request('email');
-        $company->website = request('website');
-        $company->logo = $fileNameToStore;
+        $company->name = $request->input('name');
+        $company->email = $request->input('email');
+        $company->website = $request->input('website');
+        $company->logo = $request->file('logo')->store('companies');
+
         event(new NewCompanyHasRegistered($company));
 
         $company->save();
@@ -98,7 +99,7 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $fileNameToStore = $this->uploadImage($request);
+//        $fileNameToStore = $this->uploadImage($request);
         request()->validate([
             'name' => 'required',
         ]);
@@ -107,7 +108,7 @@ class CompaniesController extends Controller
         $company->name = request('name');
         $company->email = request('email');
         $company->website = request('website');
-        $company->logo = $fileNameToStore;
+//        $company->logo = $fileNameToStore;
 
         $company->save();
         return redirect('/companies');
@@ -122,26 +123,26 @@ class CompaniesController extends Controller
     public function destroy($id)
     {
         Company::find($id)->delete();
-        return back();
+        return redirect('/companies');
     }
 
-    private function uploadImage(Request $request)
-    {
-        if ($request->hasFile('logo')) {
-            // Get filename with the extension
-            $filenameWithExt = $request->file('logo')->getClientOriginalName();
-            // Get just filename
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Get just ext
-            $extension = $request->file('logo')->getClientOriginalExtension();
-            // Filename to store
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-            // Upload Image
-            $request->file('logo')->storeAs('public/companyLogo', $fileNameToStore);
-        } else {
-            $fileNameToStore = "";
-        }
-        return $fileNameToStore;
-    }
+//    private function uploadImage(Request $request)
+//    {
+//        if ($request->hasFile('logo')) {
+//            // Get filename with the extension
+//            $filenameWithExt = $request->file('logo')->getClientOriginalName();
+//            // Get just filename
+//            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+//            // Get just ext
+//            $extension = $request->file('logo')->getClientOriginalExtension();
+//            // Filename to store
+//            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+//            // Upload Image
+//            $request->file('logo')->storeAs('public/companyLogo', $fileNameToStore);
+//        } else {
+//            $fileNameToStore = "";
+//        }
+//        return $fileNameToStore;
+//    }
 
 }

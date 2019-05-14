@@ -13,12 +13,12 @@ class CompaniesTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create('App\Company');
-        for ($i = 0; $i < 35; $i++) {
+        $faker = Faker::create('App\Model\Company');
+        for ($i = 0; $i < 1; $i++) {
             DB::table('companies')->insert([
                 'name' => $faker->company,
                 'email' => $faker->email,
-                'logo' => $faker->image,
+                'logo' => $faker->image(public_path('/storage/companies'),'50','50','nature',false),
                 'website' => $faker->safeEmailDomain,
                 'updated_at' => \Carbon\Carbon::now(),
                 'created_at' => \Carbon\Carbon::now(),

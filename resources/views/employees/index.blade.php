@@ -20,7 +20,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <table id="table_employees" class="display" style="width: 100%">
+                <table id="table_employees" class="display w-100">
                     <thead>
                     <tr>
                         <th>Id</th>
@@ -42,15 +42,36 @@
                             <td>{{$employee->phone}}</td>
                             <td>
                                 <a href="employees/{{$employee->id}}/edit">
-                                    <button type="submit" class="btn btn-warning"><i class="fas fa-user-edit"></i></button>
+                                    <button type="submit" class="btn btn-warning"><i class="fas fa-user-edit"></i>
+                                    </button>
                                 </a>
                             </td>
                             <td>
+                                <button type="submit" class="btn btn-danger" data-toggle="modal"
+                                        data-target="#deleteEmployeeModal"><i class="fas fa-user-times"></i></button>
                                 <form method="post" action="/employees/{{$employee->id}}">
                                     @method('DELETE')
                                     @csrf
-                                    <button type="submit" class="btn btn-danger"><i class="fas fa-user-times"></i>
-                                    </button>
+                                    <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog"
+                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content bg-danger">
+                                                <div class="modal-header">
+                                                    <h5>Delete employee</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Do you want to delete the employee?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-warning">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
                             </td>
                         </tr>

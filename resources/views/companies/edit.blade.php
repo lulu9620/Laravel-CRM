@@ -22,8 +22,8 @@
                         @if($company->logo)
                             <label class="mb-2" for="logo">Logo:</label><br>
                             <div class="col-lg-6">
-                                <img src="/storage/companyLogo/{{$company->logo}}" class="img-fluid" alt="" width="80"
-                                     height="80"><br>
+                                <img src="/storage/companies/{{$company->logo}}" class="img-fluid" alt="" width="50"
+                                     height="50"><br>
                             </div>
                         @else
                             <label for="changeLogo">Add Logo :</label>
@@ -43,13 +43,33 @@
                 </form>
             </div>
             <div class="col-lg-6 text-center">
+                <hr class="mt-5">
+                <span class="h5 text-center">Delete the company?</span><br>
+                <button type="submit" class="btn btn-danger" data-toggle="modal" data-target="#deleteCompanyModal">
+                    Delete!
+                </button>
+                <hr>
                 <form method="post" action="/companies/{{$company->id}}">
                     @csrf
                     @method('DELETE')
-                    <hr class="mt-5">
-                    <span class="h5 text-center">Do you want to delete the company? </span><br>
-                    <button type="submit" class="btn btn-danger">Delete!</button>
-                    <hr>
+                    <div class="modal fade" id="deleteCompanyModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content bg-danger">
+                                <div class="modal-header ">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Do you want to delete the company?<br>
+                                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-warning">Delete</button>
+                                </div>
+                                <div class="modal-footer"></div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
